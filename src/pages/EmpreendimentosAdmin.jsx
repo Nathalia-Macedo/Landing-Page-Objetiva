@@ -554,7 +554,6 @@
 
 
 
-
 import React, { useState, useEffect, useRef } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { Plus, Trash2, Upload, Save, Edit3, Image as ImageIcon, ChevronLeft, ChevronRight, Users, X } from "lucide-react";
@@ -843,15 +842,22 @@ export default function AdminEmpreendimentos() {
                       <option value="lançamento">Lançamento</option>
                       <option value="entregue">Entregue</option>
                     </select>
-                    <select
-                      name="display_on"
-                      value={form.display_on}
-                      onChange={handleChange}
-                      className="bg-white/50 border border-white/30 p-3 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-300"
-                    >
-                      <option value="empreendimentos">Empreendimentos</option>
-                      <option value="construções">Construções</option>
-                    </select>
+                   <div className="flex flex-col">
+  <label htmlFor="display_on" className="text-sm font-medium text-gray-700 mb-1">
+    Onde exibir:
+  </label>
+  <select
+    id="display_on"
+    name="display_on"
+    value={form.display_on}
+    onChange={handleChange}
+    className="bg-white/50 border border-white/30 p-3 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-300"
+  >
+    <option value="empreendimentos">Empreendimentos</option>
+    <option value="construções">Construções</option>
+  </select>
+</div>
+
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-gray-800">Observações</label>
