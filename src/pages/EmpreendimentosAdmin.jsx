@@ -1,4 +1,3 @@
-
 // import React, { useState, useEffect, useRef } from "react";
 // import toast, { Toaster } from "react-hot-toast";
 // import { Plus, Trash2, Upload, Save, Edit3, Image as ImageIcon, ChevronLeft, ChevronRight, Users, X } from "lucide-react";
@@ -18,7 +17,7 @@
 
 // export default function AdminEmpreendimentos() {
 //   const { token } = useAuth();
-//   const [form, setForm] = useState({ name: "", caption: "", images: [], localizacao: "", observacoes: [""], tipo: "", status: "", display_on: "empreendimentos" });
+//   const [form, setForm] = useState({ name: "", caption: "", images: [], localizacao: "", observacoes: [""], tipo: "", status: "" });
 //   const [previews, setPreviews] = useState([]);
 //   const [loading, setLoading] = useState(false);
 //   const [projects, setProjects] = useState([]);
@@ -127,7 +126,7 @@
 //   };
 
 //   const resetForm = () => {
-//     setForm({ name: "", caption: "", images: [], localizacao: "", observacoes: [""], tipo: "", status: "", display_on: "empreendimentos" });
+//     setForm({ name: "", caption: "", images: [], localizacao: "", observacoes: [""], tipo: "", status: "" });
 //     setPreviews([]);
 //     setEditingId(null);
 //     if (inputFileRef.current) inputFileRef.current.value = "";
@@ -136,7 +135,7 @@
 //   const handleEdit = (p) => {
 //     setEditingId(p.id);
 //     const images = p.images || [];
-//     setForm({ ...p, observacoes: p.observacoes.length ? p.observacoes : [""], images, display_on: p.display_on || "empreendimentos" });
+//     setForm({ ...p, observacoes: p.observacoes.length ? p.observacoes : [""], images });
 //     setPreviews(images.map(img => img.startsWith("http") ? img : `data:image/*;base64,${img}`));
 //   };
 
@@ -265,18 +264,19 @@
 //                       onChange={handleChange}
 //                       className="bg-white/50 border border-white/30 p-3 rounded-lg text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-300"
 //                     />
-//                     <select
-//                       name="tipo"
-//                       value={form.tipo}
-//                       onChange={handleChange}
-//                       required
-//                       className="bg-white/50 border border-white/30 p-3 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-300"
-//                     >
-//                       <option value="">Tipo de Empreendimento</option>
-//                       <option value="Residencial">Residencial</option>
-//                       <option value="Empresarial">Empresarial</option>
-//                       <option value="Casas">Casas</option>
-//                     </select>
+//                    <select
+//   name="tipo"
+//   value={form.tipo}
+//   onChange={handleChange}
+//   required
+//   className="bg-white/50 border border-white/30 p-3 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-300"
+// >
+//   <option value="">Tipo de Empreendimento</option>
+//   <option value="Residencial">Residencial</option>
+//   <option value="Empresarial">Empresarial</option>
+//   <option value="Casas">Casas</option>
+// </select>
+
 //                     <select
 //                       name="status"
 //                       value={form.status}
@@ -287,22 +287,6 @@
 //                       <option value="lançamento">Lançamento</option>
 //                       <option value="entregue">Entregue</option>
 //                     </select>
-//                    <div className="flex flex-col">
-//   <label htmlFor="display_on" className="text-sm font-medium text-gray-700 mb-1">
-//     Onde exibir:
-//   </label>
-//   <select
-//     id="display_on"
-//     name="display_on"
-//     value={form.display_on}
-//     onChange={handleChange}
-//     className="bg-white/50 border border-white/30 p-3 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-300"
-//   >
-//     <option value="empreendimentos">Empreendimentos</option>
-//     <option value="construções">Construções</option>
-//   </select>
-// </div>
-
 //                   </div>
 //                   <div className="space-y-2">
 //                     <label className="text-sm font-medium text-gray-800">Observações</label>
@@ -343,43 +327,45 @@
 //                     />
 //                   </div>
 //                   {previews.length > 0 && (
-//                     <div className="space-y-2">
-//                       <label className="text-sm font-medium text-gray-800">Imagens Selecionadas</label>
-//                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-//                         {previews.map((preview, index) => (
-//                           <div key={index} className="relative">
-//                             <img
-//                               src={preview}
-//                               alt={`Preview ${index + 1}`}
-//                               className="h-20 w-full object-cover rounded-lg"
-//                             />
-//                             <button
-//                               type="button"
-//                               onClick={() => {
-//                                 const isBase64 =
-//                                   form.images[index]?.startsWith("data:image") ||
-//                                   form.images[index]?.length > 200;
+//   <div className="space-y-2">
+//     <label className="text-sm font-medium text-gray-800">Imagens Selecionadas</label>
+//     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+//       {previews.map((preview, index) => (
+//         <div key={index} className="relative">
+//           <img
+//             src={preview}
+//             alt={`Preview ${index + 1}`}
+//             className="h-20 w-full object-cover rounded-lg"
+//           />
+//           <button
+//             type="button"
+//             onClick={() => {
+//               const isBase64 =
+//                 form.images[index]?.startsWith("data:image") ||
+//                 form.images[index]?.length > 200;
 
-//                                 if (isBase64 || !editingId) {
-//                                   setForm((prev) => ({
-//                                     ...prev,
-//                                     images: prev.images.filter((_, i) => i !== index),
-//                                   }));
-//                                   setPreviews((prev) => prev.filter((_, i) => i !== index));
-//                                 } else {
-//                                   handleImageDelete(form.images[index], index);
-//                                 }
-//                               }}
-//                               className="absolute top-1 right-1 bg-white/70 p-1 rounded-full text-red-600 hover:bg-white"
-//                               aria-label={`Remover imagem ${index + 1}`}
-//                             >
-//                               <Trash2 size={14} />
-//                             </button>
-//                           </div>
-//                         ))}
-//                       </div>
-//                     </div>
-//                   )}
+//               if (isBase64 || !editingId) {
+//                 // Remove apenas do estado local
+//                 setForm((prev) => ({
+//                   ...prev,
+//                   images: prev.images.filter((_, i) => i !== index),
+//                 }));
+//                 setPreviews((prev) => prev.filter((_, i) => i !== index));
+//               } else {
+//                 // Remove do servidor
+//                 handleImageDelete(form.images[index], index);
+//               }
+//             }}
+//             className="absolute top-1 right-1 bg-white/70 p-1 rounded-full text-red-600 hover:bg-white"
+//             aria-label={`Remover imagem ${index + 1}`}
+//           >
+//             <Trash2 size={14} />
+//           </button>
+//         </div>
+//       ))}
+//     </div>
+//   </div>
+// )}
 
 //                   <button
 //                     type="submit"
@@ -564,6 +550,11 @@
 //     </>
 //   );
 // }
+
+
+
+
+
 
 
 
@@ -789,7 +780,7 @@ export default function AdminEmpreendimentos() {
             </button>
             <button
               onClick={() => setActiveTab("users")}
-              className={`px-6 py-3 text-sm font-semibold transition-all duration-300 ${
+              className={`px-6 py-3 text-lg font-semibold transition-all duration-300 ${
                 activeTab === "users"
                   ? "text-orange-600 border-b-2 border-orange-600"
                   : "text-gray-600 hover:text-orange-500"
@@ -810,7 +801,7 @@ export default function AdminEmpreendimentos() {
                     {editingId ? <Edit3 size={20} /> : <Plus size={20} />}
                     {editingId ? "Editar Projeto" : "Novo Projeto"}
                   </h2>
-                  <div className="grid md:grid-cols-3 gap-4">
+                  <div className="grid md:grid-cols-2 gap-4">
                     <input
                       name="name"
                       placeholder="Nome *"
@@ -855,7 +846,7 @@ export default function AdminEmpreendimentos() {
                       <option value="lançamento">Lançamento</option>
                       <option value="entregue">Entregue</option>
                     </select>
-                    <div className="flex flex-col">
+                   <div className="flex flex-col">
                       <label htmlFor="display_on" className="text-sm font-medium text-gray-700 mb-1">
                         Onde exibir:
                       </label>
@@ -870,6 +861,7 @@ export default function AdminEmpreendimentos() {
                         <option value="construções">Construções</option>
                       </select>
                     </div>
+
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-gray-800">Observações</label>
