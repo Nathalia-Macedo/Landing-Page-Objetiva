@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
-import { EmpreendimentosProvider } from "../context/EmpreendimentosContext";
 import EmpreendimentosGrid from "../components/GridEmpreendimentos";
 import { useLanguage } from "../context/LanguageContext";
 import useDynamicTranslation from "../hooks/useDynamicTranslaction";
@@ -87,11 +86,8 @@ const Empreendimentos = () => {
 
       {/* ---------- grade ---------- */}
       <section className="max-w-7xl mx-auto px-4 pb-16">
-        <EmpreendimentosProvider>
-          <EmpreendimentosGrid category={active} />
-        </EmpreendimentosProvider>
+        <EmpreendimentosGrid category={active} />       
       </section>
-
       <Footer />
     </div>
   );

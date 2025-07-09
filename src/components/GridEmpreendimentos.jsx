@@ -213,8 +213,10 @@ const EmpreendimentosGrid = ({ category }) => {
 
   const itens =
     category === "Todos"
-      ? translatedCards
-      : translatedCards.filter((e) => e.tipo?.toLowerCase() === category.toLowerCase());
+     
+      ? translatedCards.filter((e) => e.display_on === "empreendimentos")
+      :  translatedCards.filter((e) => 
+        e.tipo?.toLowerCase() === category.toLowerCase() && e.display_on === "empreendimentos");
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

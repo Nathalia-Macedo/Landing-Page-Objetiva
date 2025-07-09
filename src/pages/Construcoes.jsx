@@ -7,6 +7,14 @@ import { useLanguage } from "../context/LanguageContext";
 import useDynamicTranslation from "../hooks/useDynamicTranslaction";
 
 const ORIGINAL_FILTROS = ["Todos"];
+const ORIGINAL_PARAGRAFOS = [
+  "Construção de Edificações",
+  "Obras para Terceiros",
+  "Gerenciamento e Fiscalização de Obras",
+  "Built To Suit",
+  "Reformas em Geral",
+  "Construção de Reservatórios e Redes de Distribuição de Água",
+];
 const NAV_H = 96;
 
 export default function Construcoes() {
@@ -16,6 +24,8 @@ export default function Construcoes() {
   const [translatedTitle, setTranslatedTitle] = useState("Construções para terceiros");
   const [translatedBreadcrumb, setTranslatedBreadcrumb] = useState("Construções");
   const [translatedEmpreendimentos, setTranslatedEmpreendimentos] = useState([]);
+  const [translatedParagrafos, setTranslatedParagrafos] = useState(ORIGINAL_PARAGRAFOS);
+
 
   const { language } = useLanguage();
   const { translateBatch } = useDynamicTranslation();
@@ -25,6 +35,7 @@ export default function Construcoes() {
       if (language === "port") {
         setTranslatedFiltros(ORIGINAL_FILTROS);
         setTranslatedBreadcrumb("Construções");
+        setTranslatedParagrafos(ORIGINAL_PARAGRAFOS);
         setTranslatedEmpreendimentos(empreendimentos);
         return;
       }
@@ -38,6 +49,24 @@ export default function Construcoes() {
         setTranslatedTitle(tituloTrad);
         setTranslatedBreadcrumb(breadcrumbTrad);
         setTranslatedFiltros(filtrosTraduzidos);
+
+        const paragrafosTraduzidos = await translateBatch(ORIGINAL_PARAGRAFOS, "en");
+
+        const corrigirErros = (lista) =>
+        lista.map((t) => {
+          let texto = t;
+
+          // Corrigir traduções ruins
+          if (texto.toLowerCase().includes("doware")) texto = "General Renovations";
+
+          // Substituir caractere | por travessão —
+          texto = texto.replace("|", "");
+
+          return texto;
+        });
+
+        setTranslatedParagrafos(corrigirErros(paragrafosTraduzidos));
+
 
         const empreendimentosParaTraduzir = empreendimentos.flatMap((e) => [
           e.tipo || "",
@@ -63,9 +92,13 @@ export default function Construcoes() {
     traduzir();
   }, [language, empreendimentos]);
 
-  const lista = translatedEmpreendimentos.filter((e) =>
-    tab === "Todos" ? true : (e.tipo || "").toLowerCase() === tab.toLowerCase()
-  );
+  const lista = translatedEmpreendimentos.filter((e) => {
+    const isCronstruction = e.display_on === "construções";
+    const meatchesCategory = tab === "Todos" ? true : (e.tipo || "").toLowerCase() === tab.toLowerCase();
+    return meatchesCategory && isCronstruction;
+  });
+
+
 
   return (
     <main className="bg-white flex flex-col min-h-screen">
@@ -82,6 +115,17 @@ export default function Construcoes() {
         <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-8">
           {translatedTitle}
         </h1>
+
+        {/* informacoes adicionais */}
+        <ul className="list-disc pl-6 space-y-1 text-gray-700 text-base md:text-lg mb-10 uppercase"> 
+          {translatedParagrafos.map((texto, i) => (
+            <li key={i}>{texto}</li>
+          ))}
+        </ul>
+
+
+
+        
 
         {/* abas de filtro */}
         <div className="flex gap-6 mb-10 text-sm md:text-base">

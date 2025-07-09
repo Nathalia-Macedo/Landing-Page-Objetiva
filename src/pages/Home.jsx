@@ -22,7 +22,7 @@ const Home = () => {
     indicador: "",
     heroLine1: "",
     heroLine2: "",
-    lancamento: "LANÇAMENTO",
+    lancamento: "",
     titulo: "MAIS DE 25 ANOS CONSTRUINDO COM EXCELÊNCIA E CONFIANÇA",
     paragrafo1:
       "Com experiência, inovação e foco no cliente, entregamos soluções completas em incorporação, edificações e reformas.",
